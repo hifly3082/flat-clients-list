@@ -1,6 +1,9 @@
-import { Button, Card, Col, Row, Spin, message } from 'antd'
-import ModalForm from './ModalForm'
+import { Divider, Spin, message } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons'
+
 import { deleteClient } from '../api/api'
+import ModalForm from './ModalForm'
+import ClientCard from './ClientCard'
 
 const ClientList = ({
   clientsData,
@@ -18,35 +21,34 @@ const ClientList = ({
   }
 
   return (
-    <div className='client-list'>
-      {clientsData
-        ? clientsData.map((client) => (
-            <Col key={client.id} span={4}>
-              <Card
+    <Spin
+      spinning={loading}
+      indicator={
+        <LoadingOutlined
+          style={{
+            fontSize: 24
+          }}
+          spin
+        />
+      }>
+      <Divider orientation='left'>Clients</Divider>
+      <div className='client-list'>
+        {clientsData
+          ? clientsData.map((client) => (
+              <ClientCard
+                key={client.id}
+                client={client}
+                handleDelete={handleDelete}
                 loading={loading}
-                style={{
-                  width: 300,
-                  height: 300,
-                  marginTop: 24
-                }}>
-                <h2>{client.name}</h2>
-                <div>
-                  <p> Phone: {client.phone} </p>
-                  <p> Email: {client.email} </p>
-                  <p> ClientId: {client.id} </p>
-                </div>
-                <div>
-                  <Button onClick={handleDelete(client.id)}>Delete</Button>
-                </div>
-              </Card>
-            </Col>
-          ))
-        : null}
-      <ModalForm
-        currentSelectedFlatId={currentSelectedFlatId}
-        fetchClients={fetchClients}
-      />
-    </div>
+              />
+            ))
+          : null}
+        <ModalForm
+          currentSelectedFlatId={currentSelectedFlatId}
+          fetchClients={fetchClients}
+        />
+      </div>
+    </Spin>
   )
 }
 export default ClientList

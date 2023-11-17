@@ -1,8 +1,93 @@
-# React + Vite
+Тестовое Задание для вакансии **Frontend developer Junior/Middle**
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+реализовать SPA на JS + react js / react hooks
 
-Currently, two official plugins are available:
+Отобразить список квартир в виде "дерева"
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+с возможностью открыть/закрыть "ветвь":
+
+Улица 1
+
+---- Дом 1
+
+--------- квартира 1
+
+--------- квартира 2
+
+--------- квартира 3
+
+--------- квартира 4
+
+----- Дом 2
+
+--------- квартира 1
+
+...
+
+Улица 2
+
+----- Дом 1
+
+--------- квартира 1
+
+--------- квартира 2
+
+...
+
+У пользователя должна быть возможность выбрать квартиру,
+
+и получить список жильцов в выбранной квартире,
+
+а так-же добавить/удалить жильца в выбранной квартире
+
+При добавлении жильца, ввод должен проверяться на корректные данные
+
+Список жильцов должен быть в виде карточек одинакового размера, расположенных слева-напрраво, сверху-вниз
+
+[1][2][3][4][5][6]
+
+[7][8][9][A][B][C]
+
+——————————————————————————————
+
+swagger - https://dispex.org/api/vtest/docs/swagger/index.html
+
+api base url :  https://dispex.org/api/vtest/
+
+API:  нужные методы
+
+Список улиц: GET /Request/streets
+
+Список домов: GET /Request/houses/{id}
+
+Список квартир: GET  /HousingStock
+
+Добавить жильца.
+
+возвращает id  жильца (client-a) :
+
+POST /HousingStock /client
+
+В методе POST параметры Id и BindId не используются
+
+Удалить жильца :
+
+DELETE
+
+/HousingStock /bind_client /{id}
+
+привязка жильца к квартире
+
+PUT  /HousingStock /bind_client
+
+остальные не нужны
+
+—————————————————————————————-
+
+Технического дизайна хватит - главное функционал
+
+Результатом выполнения тестового задания будет ссылка на GIT Если нет GIT - можно отправить файл архива с проектом
+
+Ссылку на GIT или файл архива с проектом отправить  в telegram по номеру указанном в вакансии
+
+Время на выполнение - 2 дня

@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
-import { Col, Row, Divider, Tree, Spin, Space } from 'antd'
-import { DownOutlined, LoadingOutlined } from '@ant-design/icons'
+import { Spin } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons'
 import { getClients, getFlats, getHouses, getStreets } from '../api/api'
 
 import ClientList from './ClientList'
+import FlatTree from './FlatTree'
 
-const Content = () => {
+const ContentContainer = () => {
   const [loading, setLoading] = useState(false)
   const [treeData, setTreeData] = useState([])
   const [clientsData, setClientsData] = useState([])
@@ -23,8 +24,7 @@ const Content = () => {
     }
   }
 
-  const handleSelect = (selectedKeys, info) => {
-    console.log('selected', selectedKeys, info)
+  const handleSelect = (selectedKeys) => {
     setCurrentSelectedFlatId(selectedKeys[0])
   }
 
@@ -86,54 +86,22 @@ const Content = () => {
   }, [currentSelectedFlatId])
 
   return (
-    <>
-      <Divider orientation='left'>Housing stock</Divider>
-      <Row>
-        <Col span={4}>
-          <Spin
-            spinning={loading}
-            indicator={
-              <LoadingOutlined
-                style={{
-                  fontSize: 24
-                }}
-                spin
-              />
-            }>
-            <Tree
-              // virtual={false}
-              showLine
-              height={350}
-              onSelect={handleSelect}
-              switcherIcon={<DownOutlined />}
-              treeData={treeData}
-            />
-          </Spin>
-        </Col>
+    <div className='content'>
+      <FlatTree
+        loading={loading}
+        treeData={treeData}
+        handleSelect={handleSelect}
+      />
 
-        <Divider orientation='left'>Clients</Divider>
-
-        <Spin
-          spinning={loading}
-          indicator={
-            <LoadingOutlined
-              style={{
-                fontSize: 24
-              }}
-              spin
-            />
-          }>
-          {currentSelectedFlatId && (
-            <ClientList
-              clientsData={clientsData}
-              loading={loading}
-              fetchClients={fetchClients}
-              currentSelectedFlatId={currentSelectedFlatId}
-            />
-          )}
-        </Spin>
-      </Row>
-    </>
+      {currentSelectedFlatId && (
+        <ClientList
+          loading={loading}
+          clientsData={clientsData}
+          currentSelectedFlatId={currentSelectedFlatId}
+          fetchClients={fetchClients}
+        />
+      )}
+    </div>
   )
 }
-export default Content
+export default ContentContainer
