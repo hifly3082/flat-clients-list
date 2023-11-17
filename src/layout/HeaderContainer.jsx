@@ -9,7 +9,7 @@ const HeaderContainer = () => {
       style={{
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'flex-start'
       }}>
       <Title level={4} style={{ color: '#fff' }}>
         SPA для отображения списка зарегистрированных пользователей

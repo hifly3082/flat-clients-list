@@ -1,6 +1,6 @@
-import Content from './../components/ClientListContainer'
+import ContentContainer from '../components/ContentContainer'
 
 const Clients = () => {
-  return <Content />
+  return <ContentContainer />
 }
 export default Clients

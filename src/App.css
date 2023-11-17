@@ -4,8 +4,20 @@
   box-sizing: border-box;
 }
 
+.content {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 2rem;
+}
+
 .client-list {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 1rem;
+}
+
+.btn-delete {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
 }

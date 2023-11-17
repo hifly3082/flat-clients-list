@@ -44,6 +44,7 @@ export const getClients = async (addressId) => {
   }
 }
 
+// Add client + bind it to selected flat
 export const registerClient = async (clientData, flatId) => {
   try {
     const response = await addClient(clientData)
