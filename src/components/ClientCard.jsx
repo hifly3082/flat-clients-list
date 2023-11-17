@@ -1,6 +1,6 @@
 import { Col, Card, Button } from 'antd'
 
-const ClientCard = ({ handleDelete, client, loading }) => {
+const ClientCard = ({ onDelete, client, loading }) => {
   return (
     <Col key={client.id} span={4}>
       <Card
@@ -17,7 +17,7 @@ const ClientCard = ({ handleDelete, client, loading }) => {
           <p> ClientId: {client.id} </p>
         </div>
         <div>
-          <Button className='btn-delete' onClick={handleDelete(client.id)}>
+          <Button className='btn-delete' onClick={onDelete}>
             Delete
           </Button>
         </div>
