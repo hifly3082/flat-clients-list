@@ -107,7 +107,7 @@ export const ContentContainer = () => {
   }, [])
 
   useEffect(() => {
-    fetchClients(currentSelectedFlatId)
+    currentSelectedFlatId && fetchClients(currentSelectedFlatId)
   }, [currentSelectedFlatId])
 
   return (
