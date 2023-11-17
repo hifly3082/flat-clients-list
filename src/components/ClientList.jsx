@@ -1,54 +1,52 @@
-import { Divider, Spin, message } from 'antd'
+import { Divider, Spin } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 
-import { deleteClient } from '../api/api'
-import ModalForm from './ModalForm'
+import AddUserCard from './AddUserCard'
 import ClientCard from './ClientCard'
 
 const ClientList = ({
   clientsData,
   loading,
-  currentSelectedFlatId,
-  fetchClients
+  onCreate,
+  onDelete,
+  openModal,
+  setOpenModal
 }) => {
-  const handleDelete = (clientId) => async () => {
-    try {
-      await deleteClient(clientId)
-      message.success('Client successfully deleted.')
-    } catch (error) {
-      message.error('Error deleting client. Please try again.')
-    }
+  const handleDelete = (id) => () => {
+    onDelete && onDelete(id)
   }
 
   return (
-    <Spin
-      spinning={loading}
-      indicator={
-        <LoadingOutlined
-          style={{
-            fontSize: 24
-          }}
-          spin
-        />
-      }>
+    <div>
       <Divider orientation='left'>Clients</Divider>
-      <div className='client-list'>
-        {clientsData
-          ? clientsData.map((client) => (
+      <Spin
+        spinning={loading}
+        indicator={
+          <LoadingOutlined
+            style={{
+              fontSize: 24
+            }}
+            spin
+          />
+        }>
+        <div className='client-list'>
+          {clientsData &&
+            clientsData.map((client) => (
               <ClientCard
                 key={client.id}
                 client={client}
-                handleDelete={handleDelete}
+                onDelete={handleDelete(client.id)}
                 loading={loading}
               />
-            ))
-          : null}
-        <ModalForm
-          currentSelectedFlatId={currentSelectedFlatId}
-          fetchClients={fetchClients}
-        />
-      </div>
-    </Spin>
+            ))}
+          <AddUserCard
+            onCreate={onCreate}
+            openModal={openModal}
+            setOpenModal={setOpenModal}
+          />
+        </div>
+      </Spin>
+    </div>
   )
 }
 export default ClientList

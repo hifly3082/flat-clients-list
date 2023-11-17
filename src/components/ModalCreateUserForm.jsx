@@ -1,6 +1,6 @@
 import { Form, Input, Modal } from 'antd'
 
-export const CollectionCreateForm = ({ open, onCreate, onCancel }) => {
+export const ModalCreateUserForm = ({ open, onCreate, onCancel }) => {
   const [form] = Form.useForm()
 
   return (

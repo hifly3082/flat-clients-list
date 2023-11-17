@@ -2,6 +2,7 @@ import { Header } from 'antd/es/layout/layout'
 import { Typography } from 'antd'
 
 const { Title } = Typography
+
 const HeaderContainer = () => {
   return (
     <Header

@@ -1,13 +1,18 @@
 import { useEffect, useState } from 'react'
-import { Spin } from 'antd'
-import { LoadingOutlined } from '@ant-design/icons'
-import { getClients, getFlats, getHouses, getStreets } from '../api/api'
+import { message } from 'antd'
+import {
+  deleteClient,
+  getClients,
+  getFlats,
+  getHouses,
+  getStreets,
+  registerClient
+} from '../api/api'
+import { ContentView } from './ContentView'
 
-import ClientList from './ClientList'
-import FlatTree from './FlatTree'
-
-const ContentContainer = () => {
+export const ContentContainer = () => {
   const [loading, setLoading] = useState(false)
+  const [openModal, setOpenModal] = useState(false)
   const [treeData, setTreeData] = useState([])
   const [clientsData, setClientsData] = useState([])
   const [currentSelectedFlatId, setCurrentSelectedFlatId] = useState()
@@ -26,6 +31,26 @@ const ContentContainer = () => {
 
   const handleSelect = (selectedKeys) => {
     setCurrentSelectedFlatId(selectedKeys[0])
+  }
+
+  const handleDelete = async (clientId) => {
+    try {
+      await deleteClient(clientId)
+      message.success('Client successfully deleted.')
+    } catch (error) {
+      message.error('Error deleting client. Please try again.')
+    }
+  }
+
+  const handleCreate = async (values) => {
+    try {
+      await registerClient(values, currentSelectedFlatId)
+      message.success('Client added successfully!')
+      fetchClients(currentSelectedFlatId)
+    } catch (error) {
+      message.error('Error adding client. Please try again.')
+    }
+    setOpenModal(false)
   }
 
   useEffect(() => {
@@ -82,26 +107,21 @@ const ContentContainer = () => {
   }, [])
 
   useEffect(() => {
-    fetchClients(currentSelectedFlatId)
+    currentSelectedFlatId && fetchClients(currentSelectedFlatId)
   }, [currentSelectedFlatId])
 
   return (
-    <div className='content'>
-      <FlatTree
-        loading={loading}
-        treeData={treeData}
-        handleSelect={handleSelect}
-      />
-
-      {currentSelectedFlatId && (
-        <ClientList
-          loading={loading}
-          clientsData={clientsData}
-          currentSelectedFlatId={currentSelectedFlatId}
-          fetchClients={fetchClients}
-        />
-      )}
-    </div>
+    <ContentView
+      loading={loading}
+      treeData={treeData}
+      currentSelectedFlatId={currentSelectedFlatId}
+      clientsData={clientsData}
+      fetchClients={fetchClients}
+      onSelect={handleSelect}
+      onCreate={handleCreate}
+      onDelete={handleDelete}
+      openModal={openModal}
+      setOpenModal={setOpenModal}
+    />
   )
 }
-export default ContentContainer

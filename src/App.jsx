@@ -7,9 +7,8 @@ import {
   Navigate
 } from 'react-router-dom'
 
-import { RouteNames } from './components/constants'
 import AppLayout from './layout/AppLayout'
-import Clients from './pages/Clients'
+import ClientsPage from './pages/ClientsPage'
 
 import './App.css'
 
@@ -22,11 +21,8 @@ const router = createBrowserRouter(
           <Outlet />
         </AppLayout>
       }>
-      <Route
-        index
-        element={<Navigate to={RouteNames.Clients} replace={true} />}
-      />
-      <Route path={RouteNames.Clients} element={<Clients />} />
+      <Route index element={<Navigate to='clients' replace={true} />} />
+      <Route path='clients' element={<ClientsPage />} />
     </Route>
   )
 )

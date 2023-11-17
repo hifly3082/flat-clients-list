@@ -1,7 +1,7 @@
 import { Divider, Tree, Spin } from 'antd'
 import { DownOutlined, LoadingOutlined } from '@ant-design/icons'
 
-const FlatTree = ({ treeData, loading, handleSelect }) => {
+const FlatTree = ({ treeData, loading, onSelect }) => {
   return (
     <div>
       <Divider orientation='left'>Flats</Divider>
@@ -18,7 +18,7 @@ const FlatTree = ({ treeData, loading, handleSelect }) => {
         <Tree
           showLine
           height={500}
-          onSelect={handleSelect}
+          onSelect={onSelect}
           switcherIcon={<DownOutlined />}
           treeData={treeData}
         />
