@@ -54,9 +54,10 @@ export const ContentContainer = () => {
   }
 
   useEffect(() => {
+    setLoading(true)
+
     const fetchAll = async () => {
       try {
-        setLoading(true)
         const streetsData = await getStreets()
         const streets = streetsData.map((street) => ({
           title: `${street.prefix.name}. ${street.name}`,
@@ -65,9 +66,9 @@ export const ContentContainer = () => {
           selectable: false
         }))
 
-        for (const street of streets) {
-          if (street.key) {
-            try {
+        await Promise.all(
+          streets.map(async (street) => {
+            if (street.key) {
               const housesData = await getHouses(street.key)
               const houses = housesData.map((house) => ({
                 title: `д. ${house.name}`,
@@ -76,9 +77,10 @@ export const ContentContainer = () => {
                 selectable: false
               }))
               street.children = houses
-              for (const house of houses) {
-                if (house.key) {
-                  try {
+
+              await Promise.all(
+                houses.map(async (house) => {
+                  if (house.key) {
                     const flatsData = await getFlats(house.key)
                     const flats = flatsData.map((flat) => ({
                       title: `кв. ${flat.flat}`,
@@ -86,23 +88,21 @@ export const ContentContainer = () => {
                       children: []
                     }))
                     house.children = flats
-                  } catch (error) {
-                    console.error('Error fetching flats data:', error.message)
                   }
-                }
-              }
-            } catch (error) {
-              console.error('Error fetching houses data:', error.message)
+                })
+              )
             }
-          }
-        }
+          })
+        )
+
         setTreeData(streets)
       } catch (error) {
-        console.error('Error fetching streets data:', error.message)
+        console.error('Error fetching data:', error.message)
       } finally {
         setLoading(false)
       }
     }
+
     fetchAll()
   }, [])
 
